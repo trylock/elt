@@ -1,0 +1,184 @@
+body 
+{
+    font-size: 1.1em;
+}
+
+.form-result 
+{
+    position: relative;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    display: block;
+    width: calc(100% + 2.5rem);
+    left: -1.25rem;
+    margin: 1rem 0;
+    font-family: LiberationSans, Arial, Helvetica, sans-serif;
+    font-size: 1em;
+}
+
+.form-result .inputs 
+{
+    position: relative;
+    display: block;
+    width: 1110px;
+    height: 1570px
+}
+
+.form-result .viewport 
+{
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 1rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.form-result .form-vector 
+{
+    width: 100%;
+    height: 100%;
+}
+
+.form-result input 
+{
+    position: absolute;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-result label 
+{
+    position: absolute;
+    white-space: nowrap; 
+    padding-left: 10px;
+    color: transparent;
+    font-family: LiberationSans, Arial, Helvetica, sans-serif;
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none;
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+    cursor: pointer;
+}
+
+.form-result input
+{
+    border: none;
+    background: rgba(0, 0, 0, 0.03);
+    margin-top: -26px;
+    margin-left: -5px;
+    font-family: LiberationSans, Arial, Helvetica, sans-serif;
+    padding: 4px;
+}
+
+.form-result input[required]
+{
+    background: rgba(255, 255, 0, 0.4);
+}
+
+/** Custom radio styles */
+.form-result input[type="radio"],
+.form-result input[type="checkbox"]
+{
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+.form-result input[type="radio"]:checked + label:before,
+.form-result input[type="checkbox"]:checked + label:before 
+{
+    content: "";
+    background: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGJhc2VQcm9maWxlPSJmdWxsIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNi43OCIgaGVpZ2h0PSIxNi43OCI+DQogICAgPHBhdGggZD0iTTAsMCBMMTYuNzgsMTYuNzggTTE2Ljc4LDAgTDAsMTYuNzgiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxLjY3OCIgZmlsbD0ibm9uZSIgLz4NCjwvc3ZnPg==");
+    background-size: cover;
+    position: absolute;
+    display: block;
+    width: 16.78px;
+    height: 16.78px;
+    padding: 0;
+    margin: 0;
+    margin-left: -28.5px;
+    margin-top: 0;
+    opacity: 1;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-indent: 0;
+}
+
+/** Code input styles */
+.form-result input.code-input
+{
+    font-family: 'LiberationMono', 'Courier New', Courier, monospace;
+    letter-spacing: 14px;
+    word-spacing: 0;
+    text-indent: 0;
+    padding: 5px 8px;
+    font-size: 17px;
+    text-transform: uppercase;
+    border: none;
+    margin-left: -5px;
+    margin-top: -24px;
+    height: 2em;
+}
+
+.form-result input.code-address
+{
+    margin-left: -7px;
+    margin-top: -26px;
+    letter-spacing: 1.3em;
+}
+
+.form-result input.code-input-elt 
+{
+    margin-left: -7px;
+    margin-top: -25px;
+    letter-spacing: 21.6px;
+    height: 32px;
+}
+
+/** Styles of inputs in the contact table */
+.form-result input.contact-input 
+{
+    padding: 0 5px;
+    margin-top: -16px;
+    font-size: 14px;
+}
+
+/** Loading/ready state of a button */
+.form-result button .btn-loading
+{
+    display: none;
+}
+
+.form-result button:disabled .btn-loading 
+{
+    display: inline;
+}
+
+.form-result button:disabled .btn-ready 
+{
+    display: none;
+}
+
+/** ELT count input */
+.form-result .elt-count 
+{
+    height: 25px;
+    margin-top: -18px;
+}
+
+/** Custom navbar styles */
+.navbar.navbar-custom 
+{
+    border-bottom: 1px solid #ddd;
+    padding: 0.9em;
+}
+
+.navbar-custom a 
+{
+    color: #555;
+    font-size: 1.1em;
+    padding: 0.7em 2em;
+}

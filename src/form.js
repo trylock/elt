@@ -462,10 +462,8 @@ window.addEventListener('DOMContentLoaded', function() {
                 var selected = field.options[field.value];
                 form.appendChild(createCheckMark(selected.x, selected.y));
             } else if (field.type === "checkbox") {
-                for (var option of field.options) {
-                    if (option.selected) {
-                        form.appendChild(createCheckMark(option.x, option.y));
-                    }
+                if (field.value) { // selected
+                    form.appendChild(createCheckMark(field.x, field.y));
                 }
             } else if (field.type === "code") {
                 form.appendChild(createCodeField(field.x, field.y, field.value, field.letterSpacing));
@@ -662,7 +660,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
 
                 if (input.getAttribute('type') === 'checkbox') {
-                    model[input.name] = input.checked;
+                    model[input.name].value = input.checked;
                 } else if (input.getAttribute('type') !== 'radio' || input.checked) {
                     // don't set the value if the input is an unckeded radio
                     model[input.name].value = input.value;

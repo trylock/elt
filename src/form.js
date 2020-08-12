@@ -460,6 +460,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 // find position of the selected field
                 var selected = field.options[field.value];
+                console.assert(typeof selected !== 'undefined');
                 form.appendChild(createCheckMark(selected.x, selected.y));
             } else if (field.type === "checkbox") {
                 if (field.value) { // selected
@@ -569,8 +570,8 @@ window.addEventListener('DOMContentLoaded', function() {
         removeClass(inputsCopy, 'd-none');
 
         // add template to the target element
-        var inputs = inputsCopy.getElementsByClassName('inputs')[0];
-        inputs.insertBefore(formCopy, inputs.firstChild);
+        var inputsContainer = inputsCopy.getElementsByClassName('inputs')[0];
+        inputsContainer.insertBefore(formCopy, inputsContainer.firstChild);
         targetElement.appendChild(inputsCopy);
 
         /**
@@ -654,16 +655,19 @@ window.addEventListener('DOMContentLoaded', function() {
         var fetchInputValues = function(inputs, model) {
             // set values in the model
             for (var input of inputs) {
+                var field = model[input.getAttribute('name')];
+                console.assert(typeof field === 'object');
+
                 // convert code field values to upper case
-                if (model[input.name].type === "code") {
+                if (field.type === "code") {
                     input.value = input.value.toUpperCase();
                 }
 
                 if (input.getAttribute('type') === 'checkbox') {
-                    model[input.name].value = input.checked;
+                    field.value = input.checked;
                 } else if (input.getAttribute('type') !== 'radio' || input.checked) {
                     // don't set the value if the input is an unckeded radio
-                    model[input.name].value = input.value;
+                    field.value = input.value;
                 } 
             }
         };
@@ -713,16 +717,8 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var input of inputs) {
                 // Show custom validation messages
                 input.addEventListener('invalid', function(e) {
-                    if (e.target.dataset.invalid) {
-                        e.target.setCustomValidity('');
-                        if (!e.target.validity.valid) {
-                            e.target.setCustomValidity(e.target.dataset.invalid);
-                        }
-                    }
-                });
-
-                input.addEventListener('input', function(e) {
-                    e.target.setCustomValidity('');
+                    e.preventDefault();
+                    return;
                 });
             }
         };
@@ -747,7 +743,75 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var button of buttons) {
                 button.disabled = false;
             }
-        }
+        };
+
+        /**
+         * Take validation message from data-invalid attribute of @p input and show it to the user.
+         * 
+         * @param {HTMLElement} input Input HTML element
+         */
+        var showValidationMessage = function(input) {
+            // show an error message (gathered from data-invalid attribute)
+            $(input)
+                .focus()
+                .popover({
+                    content: input.dataset.invalid,
+                    placement: 'bottom',
+                    trigger: 'focus'
+                }).popover('show');
+
+            // get rid of the popover when the input changes
+            input.addEventListener('input', function() {
+                $(input).popover('dispose');
+            });
+        };
+
+        /**
+         * Make sure @p form is valid.
+         * 
+         * If a field is not valid, this function displays an error message to the user.
+         * 
+         * @param {HTMLElement} form HTML form
+         * @param {Object} inputs Collection of inputs from @p form
+         * 
+         * @returns true iff @p form is valid
+         */
+        var validateInput = function(form, inputs) {
+            // check that user selected at least 1 type
+            var names = ['typeManual', 'typeAF', 'typeAP', 'typeAD', 'typeS'];
+            var lastInput = null;
+            var checkCount = 0;
+            for (var input of inputs) {
+                var name = input.getAttribute('name');
+                if (names.includes(name)) {
+                    if (input.checked) {
+                        ++checkCount;
+                    }
+                    lastInput = input; 
+                }
+            }
+
+            // if there is no type selected
+            if (checkCount <= 0) {
+                showValidationMessage(lastInput);
+                return false;
+            }
+
+            if (form.checkValidity()) {
+                return true;
+            }
+
+            // find the first invalid input
+            var invalidInput = null;
+            for (var input of inputs) {
+                if (!input.checkValidity()) {
+                    invalidInput = input;
+                    break;
+                }
+            }
+
+            showValidationMessage(invalidInput);
+        };
 
         // parse the required data attribute
         var additionalRequiredInputs = [];
@@ -777,8 +841,8 @@ window.addEventListener('DOMContentLoaded', function() {
         fields.date.value = year + '-' + month + '-' + day;
 
         // initialize view with values from model
-        var labels = inputsCopy.getElementsByTagName('label');
-        var inputs = inputsCopy.getElementsByTagName('input');
+        var labels = inputsContainer.getElementsByTagName('label');
+        var inputs = inputsContainer.getElementsByTagName('input');
 
         setInputValues(inputs, fields);
         setInputPosition(inputs, fields);
@@ -790,12 +854,17 @@ window.addEventListener('DOMContentLoaded', function() {
         inputsCopy.addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // check validity
+            var inputs = inputsContainer.getElementsByTagName('input');
+            if (!validateInput(this, inputs)) {
+                return;
+            }
+
             // start loading 
             var buttons = inputsCopy.getElementsByTagName('button');
             startLoading(buttons);
             try {
                 // fetch all input values from view
-                var inputs = inputsCopy.getElementsByTagName('input');
                 fetchInputValues(inputs, fields);
 
                 // generate a new form as a vector

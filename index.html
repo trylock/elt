@@ -18,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
@@ -895,7 +896,7 @@
     </svg>
 
     <!-- Form input template -->
-    <form class="elt-form d-none form-result" id="form-input-template">
+    <form class="elt-form d-none form-result" id="form-input-template" novalidate>
         <div class="viewport">
             <div class="inputs">
                 <input type="radio" name="reason" value="newElt" id="newElt" required disabled />
@@ -914,25 +915,25 @@
                     pattern="[0-9A-Za-z]{15}" 
                     data-invalid="Uveďte kód dříve registrovaného ELT (15 znaků)" />
 
-                <input type="radio" name="origin" id="domesticPlane" value="domesticPlane" required />
-                <label for="domesticPlane">(letadla zapsaná v LR ČR)</label>
-
-                <input type="radio" name="origin" id="foreignPlane" value="foreignPlane" required />
+                <input type="radio" name="origin" id="foreignPlane" value="foreignPlane" required data-invalid="Vyberte prosím jednu z možností." />
                 <label for="foreignPlane">(letadla nezapsaná v LR ČR)</label>
+
+                <input type="radio" name="origin" id="domesticPlane" value="domesticPlane" />
+                <label for="domesticPlane">(letadla zapsaná v LR ČR)</label>
 
                 <input type="checkbox" name="typeManual" id="typeManual" value="typeManual" />
                 <label for="typeManual">ručně aktivovaný</label>
             
-                <input type="checkbox" name="typeAF" id="typeAF" value="typeAF" data-invalid="Uveďte typ ELT."  />
+                <input type="checkbox" name="typeAF" id="typeAF" value="typeAF"  />
                 <label for="typeAF">(AF) Automatic Fixed </label>
             
-                <input type="checkbox" name="typeAP" id="typeAP" value="typeAP" data-invalid="Uveďte typ ELT."  />
+                <input type="checkbox" name="typeAP" id="typeAP" value="typeAP"  />
                 <label for="typeAP">(AP) Automatic Portable </label>
             
-                <input type="checkbox" name="typeAD" id="typeAD" value="typeAD" data-invalid="Uveďte typ ELT." />
+                <input type="checkbox" name="typeAD" id="typeAD" value="typeAD" />
                 <label for="typeAD">(AD) Automatic Deployable</label>
             
-                <input type="checkbox" name="typeS" id="typeS" value="typeS" data-invalid="Uveďte typ ELT."  />
+                <input type="checkbox" name="typeS" id="typeS" value="typeS" data-invalid="Vyberte alespoň 1 typ."  />
                 <label for="typeS">(S) Survival ELT</label>
 
                 <input type="text" pattern="[0-9]+" class="elt-count" name="eltCount" required data-invalid="Uveďte počet ELT na letadle" />
@@ -992,13 +993,13 @@
                 <input type="tel" id="contact3Cellphone" name="contact3Cellphone" class="contact-input" />
 
                 <!-- Plane sign -->
-                <input type="text" name="planeSign" id="planeSign" required />
+                <input type="text" name="planeSign" id="planeSign" required data-invalid="Uveďte poznávací značku." />
 
                 <!-- Plane type -->
-                <input type="text" name="planeType" id="planeType" required />
+                <input type="text" name="planeType" id="planeType" required  data-invalid="Uveďte typ / model letadla." />
 
                 <!-- Plane base -->
-                <input type="text" name="planeBase" id="planeBase" required />
+                <input type="text" name="planeBase" id="planeBase" required data-invalid="Uveďte základnu." />
 
                 <!-- Plane code -->
                 <input type="text" name="planeCode" id="planeCode" class="code-input code-address" maxlength="6" pattern="[0-9a-zA-Z]{6}" data-invalid="Adresa musí mít právě 6 znaků." />

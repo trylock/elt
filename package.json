@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "build": "babel src node_modules/pdfkit/js node_modules/svg-to-pdfkit -d build && node pack.js",
-        "minify": "minify build/bundle.js > build/bundle.min.js"
+        "minify": "minify build/bundle.js > dist/bundle.min.js"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0",

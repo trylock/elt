@@ -2,14 +2,13 @@
     "name": "elt",
     "version": "1.0.0",
     "scripts": {
-        "build": "babel src node_modules/pdfkit/js node_modules/svg-to-pdfkit -d build && node pack.js",
-        "minify": "minify build/bundle.js > dist/bundle.min.js"
+        "build": "npx babel src node_modules/pdfkit/js node_modules/svg-to-pdfkit -d build && node pack.js",
+        "minify": "npx minify build/bundle.js > dist/bundle.min.js"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0",
         "@babel/core": "^7.0.0",
         "@babel/preset-env": "^7.11.0",
-        "babel-cli": "^6.26.0",
         "concat": "^1.0.3",
         "minify": "^5.1.1"
     },

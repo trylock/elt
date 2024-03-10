@@ -813,6 +813,24 @@ window.addEventListener('DOMContentLoaded', function() {
             showValidationMessage(invalidInput);
         };
 
+        var requireAtLeastOne = function(inputA, inputB) {
+            var atLeastOneRequired = function(e) {
+                if (inputB.value.length <= 0 || inputA.value.length > 0) {
+                    inputA.setAttribute('required', 'required');
+                } else {
+                    inputA.removeAttribute('required');
+                }
+
+                if (inputA.value.length <= 0 || inputB.value.length > 0) {
+                    inputB.setAttribute('required', 'required');
+                } else {
+                    inputB.removeAttribute('required');
+                }
+            };
+            inputA.addEventListener('input', atLeastOneRequired);
+            inputB.addEventListener('input', atLeastOneRequired);
+        };
+
         // parse the required data attribute
         var additionalRequiredInputs = [];
         if (targetElement.dataset.required) {
@@ -849,6 +867,17 @@ window.addEventListener('DOMContentLoaded', function() {
         setInputValudationMessages(inputs);
         addSuffixToIDs(inputs, labels);
         makeFieldsRequired(inputs, additionalRequiredInputs);
+
+        var planeCode = null;
+        var planeSign = null;
+        for (var input of inputs) {
+            if (input.getAttribute('name') === 'planeCode') {
+                planeCode = input;
+            } else if (input.getAttribute('name') === 'planeSign') {
+                planeSign = input;
+            }
+        }
+        requireAtLeastOne(planeCode, planeSign);
 
         // submit form
         inputsCopy.addEventListener('submit', function(e) {

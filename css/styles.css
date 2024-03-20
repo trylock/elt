@@ -201,3 +201,12 @@ body
     font-weight: bold;
     font-size: 1.1em;
 }
+
+.footnote
+{
+    font-size: 0.9em;
+    position: relative;
+    top: -80px;
+    left: 50%;
+    display: inline-block;
+}

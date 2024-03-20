@@ -210,3 +210,12 @@ body
     left: 50%;
     display: inline-block;
 }
+
+.signature-note 
+{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    bottom: 100px;
+    right: 230px;
+}
